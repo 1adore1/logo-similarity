@@ -1,4 +1,4 @@
 torch 
 torchvision 
-PIL
+Pillow
 streamlit
