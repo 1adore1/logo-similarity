@@ -22,7 +22,6 @@ Try it: [logo-similarity.streamlit.app](https://logo-similarity.streamlit.app/)
 - Python 3.x
 - [Streamlit](https://streamlit.io/)
 - PyTorch
-- NumPy
 - PIL
 
 ### Installation
