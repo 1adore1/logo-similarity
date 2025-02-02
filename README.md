@@ -1,6 +1,6 @@
 # Logo Similarity
 
-This project is a test assignment for VK. It demonstrates a system that, given a cropped region of an image (e.g., a logo extracted from a video with embedded advertising), answers the question: 
+This project was a test assignment for VK. It demonstrates a system that, given a cropped region of an image (e.g., a logo extracted from a video with embedded advertising), answers the question: 
 
 **"Is this the logo of the target organization?"**
 
