@@ -1,1 +1,4 @@
-torch torchvision PIL streamlit
+torch 
+torchvision 
+PIL
+streamlit
