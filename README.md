@@ -1,16 +1,27 @@
+## Task & Solution
+
+Задание: 
+'''Предложи систему, которая позволит по кропу области с произвольным логотипом на изображении (берется из видео, куда нативно встроена реклама) отвечать на вопрос: "Является ли он логотипом искомой организации?"
+В качестве логотипов искомой организации дается несколько образцов.
+Заранее неизвестно, что именно эта организация будет искаться. Логотипы могут быть текстовыми и нетекстовыми.
+На изображении в реальности данные логотипы могут иметь самый различный масштаб, могут иметь отличные характеристики по яркости, контрастности, могут быть повернуты, несколько искажены, иметь небольшие отличия в дизайне.
+Если получится, продемонстрируй работу системы на примерах.
+Из open source датасетов есть такой вариант
+https://paperswithcode.com/dataset/logodet-3k, если будет полезно.
+В поле ответа дай описание системы и, если есть прототип, приложи ссылку на код с примерами в репозитории на
+GitHub, GitLab, Bitbucket или любой
+другой с открытым доступом.'''
+
+Ответ: Для данной задачи подойдет создание эмбеддингов референсных и тестовых изображений и их сравнение по какой-либо метрике, обычно это косинусное расстояние или евклидово расстояние. Для построения эмбеддингов можно воспользоваться классическими алгоритмами (SIFT, HOG), либо CNN в качестве feature extractor, но обычно нейросетевые решения показывают лучший результат.
+Было решено использовать ResNet-50 для построения эмбеддингов логотипов и косинусное расстояние в качестве метрики похожести логотипов. Модель обучалась на открытом датасете с 3000 логотипов с tripletloss с косинусным расстоянием, то есть на каждой итерации брались 2 элемента из одного класса (якорь и положительный объект) 1 из другого (отрицательный объект), и максимизировалось расстояние между якорем и отрицательным объектом, минимизируется между якорем и положительным объектом. 
+Также для удобства был реализован веб интерфейс (с помощью streamlit) для загрузки референсных и тестовых изображений и вывода результата сравнения эмбеддингов.
+Веб интерфейс, для тестирования проекта: [logo-similarity.streamlit.app](https://logo-similarity.streamlit.app/)
+
 # Logo Similarity
 
 This project was a test assignment for VK. It demonstrates a system that, given a cropped region of an image (e.g., a logo extracted from a video with embedded advertising), answers the question: 
 
 **"Is this the logo of the target organization?"**
-
-For this task, it is suitable to create embeddings of reference and test images and compare them using any metric, usually the cosine distance or the Euclidean distance. To build embeddings, you can use classical algorithms (SIFT, HOG), or CNN as a feature extractor, but usually neural network solutions show the best result.
-It was decided to use ResNet-50 to build logo embeddings and cosine distance as a metric of logo similarity. The model was trained on an open dataset with 3000 tripletloss logos with a cosine distance, that is, at each iteration, 2 elements from one class (anchor and positive object) were taken, 1 from the other (negative object), and the distance between the anchor and the negative object was maximized, and the distance between the anchor and the positive object was minimized. 
-Also, for convenience, a web interface was implemented (using streamlit) for uploading reference and test images and displaying the result of an embedding comparison. 
-
-(Для данной задачи подойдет создание эмбеддингов референсных и тестовых изображений и их сравнение по какой-либо метрике, обычно это косинусное расстояние или евклидово расстояние. Для построения эмбеддингов можно воспользоваться классическими алгоритмами (SIFT, HOG), либо CNN в качестве feature extractor, но обычно нейросетевые решения показывают лучший результат.
-Было решено использовать ResNet-50 для построения эмбеддингов логотипов и косинусное расстояние в качестве метрики похожести логотипов. Модель обучалась на открытом датасете с 3000 логотипов с tripletloss с косинусным расстоянием, то есть на каждой итерации брались 2 элемента из одного класса (якорь и положительный объект) 1 из другого (отрицательный объект), и максимизировалось расстояние между якорем и отрицательным объектом, минимизируется между якорем и положительным объектом. 
-Также для удобства был реализован веб интерфейс (с помощью streamlit) для загрузки референсных и тестовых изображений и вывода результата сравнения эмбеддингов.)
 
 The system compares the provided test logo against several reference logo samples of the organization. It is designed to handle logos with varying scales, brightness, contrast, rotations, and minor design variations. The underlying idea is to use a deep learning model to generate embeddings for each logo and then compute the similarity (via cosine similarity) to decide if the test logo matches one of the provided samples.
 
